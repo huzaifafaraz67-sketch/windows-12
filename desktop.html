@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Windows 12</title>
+<link rel="icon" type="image/png" href="icon/thispc.png">
+<link rel="shortcut icon" href="icon/thispc.png">
+<link rel="stylesheet" href="desktop.css">
+</head>
+<body>
+<audio id="startup" src="sound/startup.mp3" preload="auto"></audio>
+
+<!-- BOOT -->
+<div id="boot">
+  <div class="logo"><div></div><div></div><div></div><div></div></div>
+  <div class="brand">Windows<b>12</b></div>
+  <div class="dotspin"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="btxt">Starting Windows…</div>
+</div>
+
+<!-- LOCK -->
+<div id="lock">
+  <div id="lockInfo">
+    <div class="clock" id="lockClock">9:41</div>
+    <div class="date" id="lockDate">Thursday, October 1</div>
+    <div class="hint" id="lockHint">Click anywhere or press a key to sign in</div>
+  </div>
+  <div id="login">
+    <div class="ava"><img src="icon/user.png" onerror="this.style.display='none'"></div>
+    <div class="name">Huzaifa</div>
+    <div class="pin">
+      <input id="pinInput" type="password" placeholder="PIN" autocomplete="off">
+      <button id="pinGo" title="Sign in">→</button>
+    </div>
+    <div class="sub">Sign-in options</div>
+  </div>
+  <div id="lockTray">
+    <span title="Network"><img src="icon/network.png" style="width:20px;height:20px;opacity:.85"></span>
+    <span title="Bluetooth"><img src="icon/blueteeth.png" style="width:20px;height:20px;opacity:.85"></span>
+    <span title="Power">⏻</span>
+  </div>
+</div>
+
+<!-- DESKTOP -->
+<div id="desktop">
+  <video id="liveWall" loop muted autoplay playsinline></video>
+  <div id="iconLayer"></div>
+
+  <!-- DESKTOP WIDGETS -->
+  <div id="widgets">
+    <div class="widget wClock" id="wClock">
+      <div class="wTime" id="wgTime">9:41</div>
+      <div class="wDate" id="wgDate">Thursday, October 1</div>
+    </div>
+    <div class="widget wWeather" id="wWeather" title="Open Weather">
+      <div class="wTop">
+        <div class="wIco" id="wgIco">☀️</div>
+        <div class="wTemp" id="wgTemp">24°</div>
+      </div>
+      <div class="wCond" id="wgCond">Sunny</div>
+      <div class="wLoc" id="wgLoc">San Francisco</div>
+    </div>
+  </div>
+
+  <div id="startMenu">
+    <div class="search">🔍 <input id="smSearch" placeholder="Search for apps, settings, and documents"></div>
+    <div class="lbl">Pinned</div>
+    <div class="pinGrid" id="pinGrid"></div>
+    <div class="foot">
+      <div class="u"><img src="icon/user.png" onerror="this.style.visibility='hidden'"> Huzaifa</div>
+      <div class="pw" id="powerBtn" title="Power">⏻</div>
+    </div>
+  </div>
+
+  <div id="taskbar">
+    <div id="tbSearch">🔍 Search</div>
+    <div class="tbtn" id="startBtn" title="Start"><img src="icon/home.png" onerror="this.src='icon/apps.png'"></div>
+    <div class="tbtn" data-app="explorer" title="File Explorer"><img src="icon/explorer.png"></div>
+    <div class="tbtn" data-app="terminal" title="Terminal"><img src="icon/terminal.svg"></div>
+    <div class="tbtn" data-app="settings" title="Settings"><img src="icon/system.png"></div>
+    <div class="tbtn" data-app="games" title="Games"><img src="icon/game.png"></div>
+  </div>
+
+  <div id="systray">
+    <div class="ic">
+      <img src="icon/network.png" title="Network">
+      <img src="icon/blueteeth.png" title="Bluetooth">
+      <img src="icon/safe.png" title="Security">
+    </div>
+    <div id="trayClock"><div id="tcTime">9:41 AM</div><div id="tcDate">10/1/2026</div></div>
+  </div>
+
+  <div id="trayFly">
+    <div class="bigt" id="flyTime">9:41</div>
+    <div class="bigd" id="flyDate">Thursday, October 1, 2026</div>
+    <div class="cal" id="flyCal"></div>
+    <div class="qa">
+      <div class="q on" data-t="wifi"><img src="icon/network.png"><br>Wi-Fi</div>
+      <div class="q on" data-t="bt"><img src="icon/blueteeth.png"><br>Bluetooth</div>
+      <div class="q" data-t="safe"><img src="icon/safe.png"><br>Focus</div>
+    </div>
+  </div>
+</div>
+
+<div id="ctx"></div>
+
+<script src="kernel.js"></script>
+</body>
+</html>
