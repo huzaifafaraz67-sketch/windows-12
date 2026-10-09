@@ -1,0 +1,83 @@
+body.task-hide #taskbar{transform:translateX(-50%) translateY(140%);transition:transform .28s cubic-bezier(.4,0,.2,1);}
+body.task-hide.task-left #taskbar{transform:translateY(140%);}
+body.task-hide #taskbar:hover,body.task-hide #taskbar.peek{transform:translateX(-50%) translateY(0);}
+body.task-hide.task-left #taskbar:hover,body.task-hide.task-left #taskbar.peek{transform:translateY(0);}
+#tbHotzone{position:fixed;left:0;right:0;bottom:0;height:6px;z-index:1000;display:none;}
+body.task-hide #tbHotzone{display:block;}
+
+/* ===== BATCH 2 FEATURES ===== */
+/* Task Manager */
+.tm{display:flex;flex-direction:column;height:100%;padding:14px 16px;box-sizing:border-box;}
+.tm .tmhead{display:flex;justify-content:space-between;font-size:13px;color:var(--txt2);
+  padding:0 6px 8px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:6px;}
+.tm .tmlist{flex:1;overflow:auto;}
+.tmrow{display:flex;align-items:center;gap:10px;padding:8px 6px;border-radius:8px;font-size:13px;}
+.tmrow:hover{background:rgba(255,255,255,.07);}
+.tmrow img{width:22px;height:22px;}
+.tmrow .tmn{flex:1;}
+.tmrow .tmcpu{width:54px;text-align:right;color:var(--txt2);font-variant-numeric:tabular-nums;}
+.tmrow .tmend{margin-left:12px;border:none;border-radius:6px;padding:5px 10px;cursor:pointer;
+  background:var(--accent);color:#fff;font-size:12px;}
+.tmrow .tmend[disabled]{opacity:.4;cursor:default;}
+.tmempty{padding:30px;text-align:center;color:var(--txt2);}
+
+/* Start — All apps */
+#allAppsBtn{position:absolute;right:30px;top:84px;font-size:13px;color:var(--txt2);cursor:pointer;
+  padding:4px 8px;border-radius:7px;}
+#allAppsBtn:hover{background:rgba(255,255,255,.1);color:var(--txt);}
+#allAppsPanel{position:absolute;inset:70px 16px 70px;background:var(--glass2);border-radius:12px;
+  padding:14px 10px;overflow:auto;opacity:0;transform:translateX(16px);pointer-events:none;
+  transition:opacity .18s,transform .18s;}
+#allAppsPanel.on{opacity:1;transform:none;pointer-events:auto;}
+#allAppsPanel .aaHead{display:flex;align-items:center;gap:14px;padding:4px 10px 12px;font-size:15px;}
+#allAppsPanel #aaBack{cursor:pointer;color:var(--accent);font-size:13px;}
+.aaRow{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:8px;cursor:pointer;font-size:14px;}
+.aaRow:hover{background:rgba(255,255,255,.09);}
+.aaRow img{width:24px;height:24px;}
+
+/* Power screen */
+#powerScreen{position:fixed;inset:0;z-index:12000;background:#000;color:#eef3ff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;
+  opacity:0;transition:opacity .4s ease;}
+#powerScreen.on{opacity:1;}
+#powerScreen .pstxt{font-size:20px;letter-spacing:.3px;}
+#powerScreen .psring{width:52px;height:52px;border-radius:50%;border:4px solid rgba(255,255,255,.2);
+  border-top-color:#fff;animation:psSpin 1s linear infinite;}
+@keyframes psSpin{to{transform:rotate(360deg);}}
+
+/* brightness + night light overlays */
+#brightOverlay{position:fixed;inset:0;background:#000;opacity:0;pointer-events:none;z-index:11000;transition:opacity .15s;}
+#nightOverlay{position:fixed;inset:0;background:#ff8c1a;opacity:0;pointer-events:none;z-index:10990;
+  mix-blend-mode:multiply;transition:opacity .25s;}
+
+/* Action Center */
+#actionCenter{position:fixed;right:12px;bottom:76px;width:360px;max-width:92vw;z-index:1200;
+  background:var(--glass2);backdrop-filter:blur(40px) saturate(1.5);-webkit-backdrop-filter:blur(40px) saturate(1.5);
+  border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:16px;box-shadow:0 20px 60px rgba(0,0,0,.5);
+  opacity:0;transform:translateY(16px) scale(.98);pointer-events:none;
+  transition:opacity .2s,transform .2s;}
+#actionCenter.on{opacity:1;transform:none;pointer-events:auto;}
+.acQuick{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;}
+.acq{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;border-radius:12px;
+  background:rgba(255,255,255,.07);cursor:pointer;font-size:12px;color:var(--txt);transition:background .15s;}
+.acq img,.acq .acqi{width:22px;height:22px;font-size:20px;line-height:22px;}
+.acq.on{background:var(--accent);color:#fff;}
+.acSlider{display:flex;align-items:center;gap:12px;padding:8px 4px;}
+.acSlider span{width:22px;text-align:center;font-size:16px;}
+.acSlider input[type=range]{flex:1;accent-color:var(--accent);}
+.acNotTitle{margin:12px 2px 8px;font-size:13px;color:var(--txt2);}
+.acNots{display:flex;flex-direction:column;gap:8px;max-height:200px;overflow:auto;}
+.acNot{display:flex;gap:10px;align-items:flex-start;padding:10px;border-radius:10px;background:rgba(255,255,255,.06);}
+.acNot img{width:24px;height:24px;margin-top:2px;}
+.acNot b{font-size:13px;}
+.acNot .acNmsg{font-size:12px;color:var(--txt2);margin-top:2px;}
+
+/* Snap layouts flyout */
+.snapFly{position:fixed;z-index:9600;background:var(--glass2);backdrop-filter:blur(30px) saturate(1.4);
+  -webkit-backdrop-filter:blur(30px) saturate(1.4);border:1px solid rgba(255,255,255,.14);
+  border-radius:12px;padding:10px;box-shadow:0 14px 40px rgba(0,0,0,.45);}
+.snapFly .slGrid{display:flex;gap:10px;}
+.slTile{width:96px;height:64px;display:grid;gap:3px;background:rgba(255,255,255,.06);
+  border-radius:7px;padding:4px;}
+.slTile.halves{grid-template-columns:1fr 1fr;}
+.slTile.quads{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;}

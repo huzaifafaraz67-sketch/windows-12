@@ -1,0 +1,82 @@
+
+/* light theme adjustments for new bits */
+body.light .dRename{border-color:var(--accent);}
+
+/* ================= BATCH 5: Game Center ================= */
+.gc{padding:18px;color:var(--txt);height:100%;display:flex;flex-direction:column;}
+.gcHead h2{margin-bottom:14px;}
+.gcGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:16px;}
+.gcCard{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;
+  padding:18px 12px;text-align:center;cursor:pointer;transition:transform .12s,background .12s;}
+.gcCard:hover{transform:translateY(-3px);background:rgba(255,255,255,.12);}
+.gcIco{font-size:40px;line-height:1;margin-bottom:10px;}
+.gcName{font-size:14px;font-weight:600;margin-bottom:10px;}
+.gcPlay{background:var(--accent);color:#fff;border:none;border-radius:7px;padding:5px 16px;font-size:12px;cursor:pointer;}
+.gcTop{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.gcBack{background:rgba(255,255,255,.1);color:var(--txt);border:none;border-radius:7px;padding:5px 12px;cursor:pointer;font-size:13px;}
+.gcBack:hover{background:var(--accent);}
+.gcTitle{font-size:15px;font-weight:600;}
+.gcPlayArea{display:flex;flex-direction:column;align-items:center;gap:12px;}
+.gBtn{background:var(--accent);color:#fff;border:none;border-radius:7px;padding:7px 16px;font-size:13px;cursor:pointer;}
+.gBtn:hover{filter:brightness(1.1);}
+
+/* minesweeper */
+.msBar{display:flex;align-items:center;gap:14px;}
+.msGrid{display:grid;gap:2px;background:rgba(255,255,255,.08);padding:4px;border-radius:6px;}
+.msCell{width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-weight:700;
+  font-size:14px;background:rgba(255,255,255,.14);border-radius:3px;cursor:pointer;user-select:none;}
+.msCell:hover{background:rgba(255,255,255,.22);}
+.msCell.op{background:rgba(0,0,0,.25);cursor:default;}
+.msCell.mine{background:#ff5a5a;}
+.msCell[data-n="1"]{color:#5aa0ff;}.msCell[data-n="2"]{color:#5ad17a;}.msCell[data-n="3"]{color:#ff7a7a;}
+.msCell[data-n="4"]{color:#b58bff;}.msCell[data-n="5"]{color:#ffb84a;}.msCell[data-n="6"]{color:#4ad1d1;}
+
+/* tic-tac-toe */
+.tttMsg{font-size:15px;font-weight:600;}
+.tttGrid{display:grid;grid-template-columns:repeat(3,76px);grid-auto-rows:76px;gap:4px;background:rgba(255,255,255,.08);padding:4px;border-radius:8px;}
+.tttCell{display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:700;
+  background:rgba(255,255,255,.12);border-radius:6px;cursor:pointer;color:var(--txt);}
+.tttCell:hover{background:rgba(255,255,255,.2);}
+
+/* memory */
+.memoMsg{font-size:14px;font-weight:600;}
+.memoGrid{display:grid;grid-template-columns:repeat(4,64px);grid-auto-rows:64px;gap:8px;}
+.memoCard{display:flex;align-items:center;justify-content:center;font-size:28px;border-radius:9px;
+  background:var(--accent);cursor:pointer;transition:transform .15s,background .15s;}
+.memoCard.up{background:rgba(255,255,255,.16);}
+.memoCard.done{background:rgba(90,209,122,.3);cursor:default;}
+
+/* snake / pong canvases */
+#snC,#ppC{border-radius:10px;background:#10131a;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);}
+.snScore{font-size:14px;font-weight:600;}
+.snHint{font-size:11px;color:var(--txt2);}
+
+/* 2048 */
+.g2Head{font-size:14px;font-weight:600;display:flex;align-items:center;gap:12px;}
+.g2Grid{display:grid;grid-template-columns:repeat(4,66px);grid-auto-rows:66px;gap:8px;background:rgba(255,255,255,.08);padding:8px;border-radius:10px;}
+.g2Tile{display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;border-radius:7px;
+  background:rgba(255,255,255,.06);color:#fff;}
+.g2Tile.v2{background:#3a3f4b;}.g2Tile.v4{background:#4a5160;}.g2Tile.v8{background:#e8a04a;}
+.g2Tile.v16{background:#e8853a;}.g2Tile.v32{background:#e86a4a;}.g2Tile.v64{background:#e8503a;}
+.g2Tile.v128{background:#e8c24a;}.g2Tile.v256{background:#e8cf3a;color:#fff;}
+.g2Tile.v512{background:#e8d84a;}.g2Tile.v1024{background:#f0d020;}.g2Tile.v2048{background:#ffd700;color:#111;}
+
+/* ================= BATCH 6: Explorer upgrades ================= */
+.exp .rib{flex-wrap:nowrap;}
+.exp .expSearch{margin-left:auto;}
+.exp .expSearch input{height:30px;width:180px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);
+  border-radius:8px;padding:0 12px;color:var(--txt);font:inherit;font-size:12.5px;outline:none;}
+.exp .expSearch input:focus{border-color:var(--accent);}
+.exp .crumbs{height:32px;background:rgba(255,255,255,.08);border-radius:6px;display:flex;align-items:center;
+  padding:0 12px;color:var(--txt2);font-size:12.5px;margin-bottom:14px;gap:6px;}
+.exp .crumb{cursor:pointer;padding:2px 6px;border-radius:4px;}
+.exp .crumb:hover{background:rgba(255,255,255,.12);color:var(--txt);}
+.exp .csep{opacity:.6;}
+.exp .fi.sel{background:rgba(10,132,255,.3);outline:1px solid var(--accent);}
+.exp .fi .fnm{color:var(--txt);font-size:12px;line-height:1.2;word-break:break-word;}
+/* list view */
+.exp .grid.list{display:block;}
+.exp .grid.list .fi{width:auto;flex-direction:row;justify-content:flex-start;align-items:center;gap:12px;
+  padding:7px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.05);border-radius:0;}
+.exp .grid.list .fi img{width:22px;height:22px;}
+.exp .grid.list .fnm{flex:1;}

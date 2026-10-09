@@ -1,0 +1,80 @@
+/* ===== DESKTOP WIDGETS ===== */
+#widgets{position:absolute;top:18px;right:18px;z-index:2;display:flex;flex-direction:column;gap:14px;align-items:flex-end;}
+.widget{background:var(--glass2);backdrop-filter:blur(30px) saturate(1.4);border:1px solid rgba(255,255,255,.14);border-radius:16px;box-shadow:0 10px 34px rgba(0,0,0,.4);color:var(--txt);padding:16px 20px;animation:wgIn .5s cubic-bezier(.34,1.56,.64,1) both;}
+@keyframes wgIn{0%{opacity:0;transform:translateX(26px) scale(.92);}100%{opacity:1;transform:translateX(0) scale(1);}}
+.wClock{min-width:210px;}
+.wClock .wTime{font-size:40px;font-weight:300;letter-spacing:-1px;line-height:1;}
+.wClock .wDate{font-size:13px;color:var(--txt2);margin-top:6px;}
+.wWeather{min-width:210px;cursor:pointer;transition:transform .15s,box-shadow .15s;background:linear-gradient(135deg,rgba(58,120,220,.5),rgba(10,60,140,.42));}
+.wWeather:hover{transform:translateY(-2px);box-shadow:0 16px 42px rgba(0,0,0,.5);}
+.wWeather .wTop{display:flex;align-items:center;gap:12px;}
+.wWeather .wIco{font-size:34px;line-height:1;}
+.wWeather .wTemp{font-size:38px;font-weight:300;line-height:1;}
+.wWeather .wCond{font-size:14px;margin-top:6px;}
+.wWeather .wLoc{font-size:12px;color:var(--txt2);margin-top:2px;}
+
+/* ===== WEATHER APP ===== */
+.wxapp{padding:22px;display:flex;flex-direction:column;gap:16px;}
+.wxhero{text-align:center;padding:14px 0 6px;}
+.wxhero .wxloc{font-size:17px;color:var(--txt);}
+.wxhero .wxbig{display:flex;align-items:center;justify-content:center;gap:14px;margin:6px 0;}
+.wxhero .wxicoBig{font-size:64px;line-height:1;}
+.wxhero .wxtemp{font-size:72px;font-weight:200;line-height:1;color:var(--txt);}
+.wxhero .wxcond{font-size:18px;color:var(--txt);}
+.wxhero .wxhl{font-size:13px;color:var(--txt2);margin-top:4px;}
+.wxcard{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px;}
+.wxlbl{font-size:12px;color:var(--txt2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;}
+.wxhours{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;}
+.wh{flex:0 0 auto;min-width:58px;text-align:center;background:rgba(255,255,255,.05);border-radius:10px;padding:10px 6px;}
+.wh .wht{font-size:11.5px;color:var(--txt2);}
+.wh .whi{font-size:22px;margin:6px 0;}
+.wh .whp{font-size:14px;color:var(--txt);}
+.wxdays{display:flex;flex-direction:column;gap:4px;}
+.wd{display:flex;align-items:center;gap:12px;padding:7px 4px;}
+.wd .wdd{width:48px;font-size:13px;color:var(--txt);}
+.wd .wdi{width:28px;font-size:20px;text-align:center;}
+.wd .wdb{flex:1;display:flex;align-items:center;gap:10px;}
+.wd .wdb .lo{font-size:12px;color:var(--txt2);width:28px;text-align:right;}
+.wd .wdb .hi{font-size:12px;color:var(--txt);width:28px;}
+.wd .wdb .bar{position:relative;flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.12);}
+.wd .wdb .bar div{position:absolute;top:0;bottom:0;border-radius:3px;background:linear-gradient(90deg,#4aa3ff,#ffd34e);}
+.wxstats{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.wxst{background:rgba(255,255,255,.05);border-radius:10px;padding:12px 14px;}
+.wxst .k{font-size:12px;color:var(--txt2);}
+.wxst .v{font-size:20px;color:var(--txt);margin-top:4px;}
+
+/* ===== SETTINGS select box ===== */
+.selbox{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:8px;color:var(--txt);padding:8px 12px;font-size:13px;outline:none;cursor:pointer;min-width:200px;}
+.selbox option{background:#20222c;color:#f2f3f5;}
+
+/* ===== SETTINGS mode picker (dark / light) ===== */
+.modepick{display:flex;gap:16px;flex-wrap:wrap;}
+.modecard{width:168px;cursor:pointer;border-radius:12px;padding:8px;border:2px solid transparent;transition:border-color .15s,transform .15s;}
+.modecard:hover{transform:translateY(-2px);}
+.modecard.sel{border-color:var(--accent);}
+.modecard .mprev{height:96px;border-radius:9px;overflow:hidden;position:relative;box-shadow:0 4px 14px rgba(0,0,0,.3);}
+.modecard .mprev-l{background:linear-gradient(135deg,#dfe7f3,#bcd0ea);}
+.modecard .mprev-d{background:linear-gradient(135deg,#1b2436,#0b1220);}
+.modecard .mwin{position:absolute;left:16px;top:16px;right:16px;height:46px;border-radius:7px;background:rgba(255,255,255,.85);box-shadow:0 3px 10px rgba(0,0,0,.25);padding:8px;}
+.modecard .mprev-d .mwin{background:rgba(44,52,70,.92);}
+.modecard .mwin span{display:block;height:6px;border-radius:3px;margin-bottom:6px;background:rgba(0,0,0,.18);}
+.modecard .mprev-d .mwin span{background:rgba(255,255,255,.22);}
+.modecard .mwin span:first-child{width:60%;background:var(--accent);}
+.modecard .mtask{position:absolute;left:50%;transform:translateX(-50%);bottom:7px;width:70%;height:10px;border-radius:6px;background:rgba(255,255,255,.7);}
+.modecard .mprev-d .mtask{background:rgba(255,255,255,.14);}
+.modecard .mname{text-align:center;margin-top:10px;font-size:13px;color:var(--txt);}
+
+/* ===== EXPLORER nav + status ===== */
+.exp .rib .navbtns{display:flex;gap:2px;align-items:center;}
+.exp .rib .nb{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--txt);font-size:16px;}
+.exp .rib .nb:hover{background:rgba(255,255,255,.12);}
+.exp .rib .nb.off{opacity:.3;pointer-events:none;}
+.exp .rib .ribdiv{width:1px;height:26px;background:rgba(255,255,255,.14);margin:0 6px;}
+.exp .main{position:relative;padding-bottom:36px;}
+.exp .statusbar{position:absolute;left:0;right:0;bottom:0;height:28px;display:flex;align-items:center;padding:0 14px;font-size:12px;color:var(--txt2);background:rgba(255,255,255,.05);border-top:1px solid rgba(255,255,255,.08);}
+
+/* ===== START pinned slide-in ===== */
+.pinItem.slidein{animation:pinIn .34s cubic-bezier(.34,1.4,.64,1) both;}
+@keyframes pinIn{0%{opacity:0;transform:translateY(16px) scale(.9);}100%{opacity:1;transform:translateY(0) scale(1);}}
+
+/* ===== MOBILE / RESPONSIVE ===== */

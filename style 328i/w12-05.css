@@ -1,0 +1,84 @@
+@media (max-width:760px){
+  #widgets{top:10px;right:10px;left:10px;flex-direction:row;align-items:stretch;gap:10px;}
+  .widget{flex:1;padding:12px 14px;min-width:0;}
+  .wClock{min-width:0;}
+  .wClock .wTime{font-size:30px;}
+  .wWeather{min-width:0;}
+  .wWeather .wTemp{font-size:30px;}
+  .wWeather .wIco{font-size:26px;}
+  #iconLayer{padding:10px;}
+  .dicon{width:72px;height:80px;}
+  .dicon img{width:38px;height:38px;}
+  .dicon span{font-size:11px;max-width:70px;}
+  #taskbar{bottom:6px;height:52px;gap:3px;padding:0 10px;max-width:72vw;overflow-x:auto;border-radius:24px;}
+  #tbSearch{min-width:0;padding:0 8px;}
+  #tbSearch span,#tbSearch{font-size:0;}
+  #systray{right:6px;bottom:6px;height:52px;padding:0 12px;gap:8px;}
+  #systray .ic{display:none;}
+  #trayClock{font-size:11px;}
+  #startMenu{width:94vw;height:72vh;max-height:72vh;padding:18px 16px;bottom:66px;}
+  #startMenu .pinGrid{grid-template-columns:repeat(4,1fr);}
+  #trayFly{right:6px;left:6px;width:auto;}
+  .win{border-radius:12px;}
+  .exp .side{width:140px;}
+  .wxstats{grid-template-columns:1fr;}
+}
+@media (max-width:480px){
+  #startMenu .pinGrid{grid-template-columns:repeat(3,1fr);}
+  .exp .side{display:none;}
+  .wxhero .wxtemp{font-size:54px;}
+  .wxhero .wxicoBig{font-size:48px;}
+}
+
+/* ===== BATCH 1 FEATURES ===== */
+/* snap preview */
+#snapPrev{position:fixed;z-index:9000;border-radius:14px;background:rgba(120,170,255,.22);
+  border:2px solid rgba(150,195,255,.75);box-shadow:0 0 0 2000px rgba(0,0,0,0),0 8px 32px rgba(0,0,0,.25);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);pointer-events:none;opacity:0;
+  transition:opacity .12s ease, left .12s ease, top .12s ease, width .12s ease, height .12s ease;}
+#snapPrev.on{opacity:1;}
+
+/* Alt+Tab overlay */
+#altTab{position:fixed;inset:0;z-index:9500;display:flex;align-items:center;justify-content:center;
+  gap:16px;flex-wrap:wrap;padding:40px;box-sizing:border-box;
+  background:rgba(10,14,22,.42);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);}
+.atile{width:200px;height:150px;border-radius:12px;background:rgba(255,255,255,.08);
+  border:2px solid transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;overflow:hidden;cursor:pointer;
+  transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+.atile:hover{transform:translateY(-3px);}
+.atile.on{border-color:rgba(150,195,255,.95);background:rgba(255,255,255,.16);}
+.atile img{width:56px;height:56px;}
+.atile .al{font-size:13px;color:#eef3ff;text-align:center;padding:0 8px;}
+
+/* rubber-band selection */
+#selBox{position:fixed;z-index:50;border:1px solid rgba(150,195,255,.9);
+  background:rgba(120,170,255,.18);border-radius:3px;pointer-events:none;}
+.dicon.sel{background:rgba(120,170,255,.28)!important;outline:1px solid rgba(150,195,255,.6);}
+
+/* window minimize / restore anim */
+.win.minimizing{transition:transform .22s cubic-bezier(.4,0,.2,1),opacity .22s ease;
+  transform:translateY(60vh) scale(.3);opacity:0;pointer-events:none;}
+.win.restoring{animation:winRestore .24s cubic-bezier(.2,.8,.2,1);}
+@keyframes winRestore{from{transform:translateY(40vh) scale(.5);opacity:0;}to{transform:none;opacity:1;}}
+
+/* login wrong-PIN shake */
+#login.shake .pin,#login.shake .name,#login.shake .ava{animation:loginShake .4s ease;}
+@keyframes loginShake{0%,100%{transform:translateX(0);}15%{transform:translateX(-10px);}
+  30%{transform:translateX(9px);}45%{transform:translateX(-7px);}60%{transform:translateX(5px);}
+  75%{transform:translateX(-3px);}90%{transform:translateX(2px);}}
+
+/* desktop icon sizes */
+#iconLayer.sz-sm .dicon{width:76px;}
+#iconLayer.sz-sm .dicon img{width:34px;height:34px;}
+#iconLayer.sz-sm .dicon .nm{font-size:11px;}
+#iconLayer.sz-md .dicon{width:92px;}
+#iconLayer.sz-md .dicon img{width:48px;height:48px;}
+#iconLayer.sz-md .dicon .nm{font-size:12px;}
+#iconLayer.sz-lg .dicon{width:116px;}
+#iconLayer.sz-lg .dicon img{width:66px;height:66px;}
+#iconLayer.sz-lg .dicon .nm{font-size:13px;}
+
+/* taskbar alignment / auto-hide */
+body.task-left #taskbar{left:12px;transform:none;}
+body.task-left #taskbar .tbItems{justify-content:flex-start;}
