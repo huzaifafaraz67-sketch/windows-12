@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Windows 12 Setup</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;width:100%;overflow:hidden;}
+body{font-family:'Segoe UI','Segoe UI Variable',system-ui,sans-serif;background:#0067c0;color:#fff;
+  -webkit-font-smoothing:antialiased;user-select:none;cursor:default;}
+.screen{position:absolute;inset:0;display:none;flex-direction:column;animation:fade .4s ease;}
+.screen.on{display:flex;}
+@keyframes fade{from{opacity:0;}to{opacity:1;}}
+.center{align-items:center;justify-content:center;text-align:center;}
+
+/* black boot / reboot */
+#boot,#reboot,#oobePrep{background:#000;}
+.bootText{font-size:14px;color:#cfcfcf;letter-spacing:.3px;}
+.spinner{width:46px;height:46px;margin:26px auto 0;border:4px solid rgba(255,255,255,.18);
+  border-top-color:#fff;border-radius:50%;animation:spin 1s linear infinite;}
+.spinner.sm{width:34px;height:34px;border-width:3px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.dots{display:flex;gap:10px;justify-content:center;margin-top:30px;}
+.dots i{width:9px;height:9px;border-radius:50%;background:#fff;opacity:.3;animation:dp 1.2s infinite;}
+.dots i:nth-child(2){animation-delay:.15s;}
+.dots i:nth-child(3){animation-delay:.3s;}
+.dots i:nth-child(4){animation-delay:.45s;}
+.dots i:nth-child(5){animation-delay:.6s;}
+@keyframes dp{0%,100%{opacity:.25;}40%{opacity:1;}}
+
+/* win logo */
+.winlogo{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:5px;width:70px;height:70px;}
+.winlogo span{background:#fff;border-radius:3px;}
+.winlogo.blue span{background:#4cc2ff;}
+.brand{font-size:26px;font-weight:300;margin-top:22px;letter-spacing:.5px;}
+.brand b{font-weight:600;}
+</style>
+</head>
+<body>
+<style>
+/* setup window (the classic bordered dialog) */
+.setupWrap{align-items:center;justify-content:center;}
+.setupBox{width:min(760px,92vw);height:min(540px,88vh);background:#0067c0;border:1px solid rgba(255,255,255,.25);
+  box-shadow:0 30px 90px rgba(0,0,0,.5);display:flex;flex-direction:column;border-radius:4px;overflow:hidden;}
+.setupBox .hd{height:34px;background:rgba(0,0,0,.18);display:flex;align-items:center;padding:0 12px;font-size:12.5px;gap:8px;}
+.setupBox .hd .d{width:12px;height:12px;border:1.5px solid #fff;border-radius:50%;font-size:9px;display:flex;align-items:center;justify-content:center;}
+.setupBox .bd{flex:1;padding:40px 54px;overflow-y:auto;}
+.setupBox .ft{height:66px;border-top:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:0 24px;background:rgba(0,0,0,.08);}
+h1{font-size:22px;font-weight:400;margin-bottom:26px;}
+h2{font-size:18px;font-weight:400;margin-bottom:18px;}
+.fld{margin-bottom:16px;max-width:420px;}
+.fld label{display:block;font-size:13px;margin-bottom:5px;color:#dbeaff;}
+.sel,.inp{width:100%;height:36px;background:#fff;color:#111;border:none;border-radius:2px;padding:0 10px;font:inherit;font-size:14px;outline:none;}
+.sel{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' stroke='%23555' stroke-width='1.6' fill='none'/></svg>");background-repeat:no-repeat;background-position:right 10px center;}
+.btn{min-width:104px;height:34px;padding:0 18px;font:inherit;font-size:14px;border:1px solid rgba(255,255,255,.6);
+  background:transparent;color:#fff;border-radius:2px;cursor:pointer;transition:.15s;}
+.btn:hover{background:rgba(255,255,255,.14);}
+.btn.pri{background:#fff;color:#0067c0;border-color:#fff;font-weight:600;}
+.btn.pri:hover{background:#e9f2ff;}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+.link{color:#8fd0ff;font-size:13.5px;cursor:pointer;display:inline-block;margin-top:8px;text-decoration:underline;}
+.lic{height:200px;overflow-y:auto;background:rgba(0,0,0,.14);border:1px solid rgba(255,255,255,.2);
+  padding:16px;font-size:12.5px;line-height:1.6;color:#e4efff;border-radius:3px;margin-bottom:14px;}
+.chk{display:flex;align-items:center;gap:10px;font-size:13.5px;cursor:pointer;}
+.chk input{width:16px;height:16px;}
+.optcard{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid rgba(255,255,255,.22);
+  border-radius:4px;margin-bottom:10px;cursor:pointer;transition:.15s;}
+.optcard:hover,.optcard.sel{background:rgba(255,255,255,.14);border-color:#fff;}
+.optcard .oi{font-size:26px;}
+.optcard .ot{font-size:15px;}
+.optcard .od{font-size:12px;color:#cfe4ff;margin-top:2px;}
+.disk{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px;}
+.disk th,.disk td{text-align:left;padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.14);}
+.disk tr.sel td{background:rgba(255,255,255,.16);}
+.disk tr{cursor:pointer;}
+.steps{max-width:460px;margin:0 auto;}
+.steprow{display:flex;align-items:center;gap:12px;font-size:14.5px;padding:9px 0;color:#bcd8f5;}
+.steprow .mk{width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;}
+.steprow.act{color:#fff;}
+.steprow.act .mk{border-color:#4cc2ff;}
+.steprow.done{color:#fff;}
+.steprow.done .mk{background:#4cc2ff;border-color:#4cc2ff;color:#003a66;}
+.pct{font-size:52px;font-weight:200;margin:10px 0 4px;}
+.bar{width:min(420px,80vw);height:6px;background:rgba(255,255,255,.2);border-radius:4px;overflow:hidden;margin:14px auto 0;}
+.bar i{display:block;height:100%;width:0;background:#4cc2ff;border-radius:4px;transition:width .3s;}
+.sub{font-size:13.5px;color:#cfe4ff;margin-top:8px;}
+.oobe .bd{padding:48px 60px;}
+.msg{font-size:30px;font-weight:300;margin-top:24px;animation:fade .6s;}
+.pinbox{display:flex;gap:12px;margin:10px 0;max-width:300px;}
+.toggrow{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.12);max-width:520px;}
+.tog{width:40px;height:22px;background:rgba(255,255,255,.3);border-radius:12px;position:relative;cursor:pointer;flex-shrink:0;margin-top:2px;transition:.2s;}
+.tog::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s;}
+.tog.on{background:#4cc2ff;}
+.tog.on::after{left:20px;}
+.toggrow .tt{font-size:14px;}
+.toggrow .td{font-size:12px;color:#cfe4ff;margin-top:3px;}
+.hero{text-align:center;}
+.hero .big{font-size:40px;font-weight:200;margin-bottom:10px;}
+</style>
+<!-- 0: BIOS boot -->
+<div class="screen center on" id="boot">
+  <div class="bootText" id="bootLine">Press any key to boot from CD or DVD......</div>
+  <div class="spinner" style="display:none" id="bootSpin"></div>
+</div>
+
+<!-- 1: Windows Setup - language -->
+<div class="screen setupWrap" id="s_lang">
+  <div class="setupBox">
+    <div class="hd"><div class="winlogo blue" style="width:16px;height:16px;gap:2px"><span></span><span></span><span></span><span></span></div> Windows Setup</div>
+    <div class="bd">
+      <h1>Windows 12</h1>
+      <div class="fld"><label>Language to install</label>
+        <select class="sel" id="iLang"><option>English (United States)</option><option>English (United Kingdom)</option><option>اردو (Pakistan)</option><option>हिन्दी (India)</option><option>Español</option><option>Français</option></select></div>
+      <div class="fld"><label>Time and currency format</label>
+        <select class="sel"><option>English (United States)</option><option>Urdu (Pakistan)</option><option>English (United Kingdom)</option></select></div>
+      <div class="fld"><label>Keyboard or input method</label>
+        <select class="sel"><option>US</option><option>UK</option><option>US International</option></select></div>
+      <div class="sub">Enter your language and other preferences and click Next to continue.</div>
+    </div>
+    <div class="ft"><button class="btn pri" data-go="s_install">Next</button></div>
+  </div>
+</div>
+
+<!-- 2: Install now -->
+<div class="screen setupWrap" id="s_install">
+  <div class="setupBox center">
+    <div style="text-align:center">
+      <div class="winlogo blue" style="margin:0 auto 20px"><span></span><span></span><span></span><span></span></div>
+      <div class="brand">Windows<b>12</b></div>
+      <div style="margin-top:40px"><button class="btn pri" style="min-width:160px;height:42px;font-size:16px" data-go="s_key">Install now</button></div>
+      <div class="link" data-go="s_lang" style="margin-top:30px">Repair your computer</div>
+    </div>
+  </div>
+</div>
+
+<!-- 3: product key -->
+<div class="screen setupWrap" id="s_key">
+  <div class="setupBox">
+    <div class="hd">Windows Setup</div>
+    <div class="bd">
+      <h1>Activate Windows</h1>
+      <div class="fld" style="max-width:460px"><label>Enter the product key to activate Windows</label>
+        <input class="inp" placeholder="XXXXX-XXXXX-XXXXX-XXXXX-XXXXX" maxlength="29"></div>
+      <div class="sub" style="max-width:480px">If this is the first time you're installing Windows on this PC, you need to enter a valid Windows product key.</div>
+      <div class="link" data-go="s_edition">I don't have a product key</div>
+    </div>
+    <div class="ft"><button class="btn" data-go="s_install">Back</button><button class="btn pri" data-go="s_edition">Next</button></div>
+  </div>
+</div>
+
+<!-- 4: edition -->
+<div class="screen setupWrap" id="s_edition">
+  <div class="setupBox">
+    <div class="hd">Windows Setup</div>
+    <div class="bd">
+      <h1>Select the operating system you want to install</h1>
+      <div class="optcard sel" data-pick="ed"><div class="oi">🪟</div><div><div class="ot">Windows 12 Pro</div><div class="od">Recommended · x64 · with HPES NO control panel</div></div></div>
+      <div class="optcard" data-pick="ed"><div class="oi">🪟</div><div><div class="ot">Windows 12 Home</div><div class="od">x64</div></div></div>
+      <div class="optcard" data-pick="ed"><div class="oi">🪟</div><div><div class="ot">Windows 12 Enterprise</div><div class="od">x64</div></div></div>
+    </div>
+    <div class="ft"><button class="btn" data-go="s_key">Back</button><button class="btn pri" data-go="s_lic">Next</button></div>
+  </div>
+</div>
+<!-- 5: license -->
+<div class="screen setupWrap" id="s_lic">
+  <div class="setupBox">
+    <div class="hd">Windows Setup</div>
+    <div class="bd">
+      <h1>Applicable notices and license terms</h1>
+      <div class="lic">
+        <b>MICROSOFT SOFTWARE LICENSE TERMS — WINDOWS 12 (DEMO)</b><br><br>
+        This is a fan-made, offline simulation of a Windows setup experience. It is not a real operating system and installs nothing on your device.<br><br>
+        1. The software runs entirely in your browser via a local file.<br>
+        2. No data leaves your computer. No activation server is contacted.<br>
+        3. All trademarks belong to their respective owners.<br>
+        4. Provided "as is", for fun and learning.<br>
+        5. By continuing, you agree this is a playful recreation built with love for Huzaifa.<br><br>
+        Have fun exploring Windows 12!
+      </div>
+      <label class="chk"><input type="checkbox" id="agree"> I accept the license terms</label>
+    </div>
+    <div class="ft"><button class="btn" data-go="s_edition">Back</button><button class="btn pri" id="licNext" disabled data-go="s_type">Next</button></div>
+  </div>
+</div>
+
+<!-- 6: install type -->
+<div class="screen setupWrap" id="s_type">
+  <div class="setupBox">
+    <div class="hd">Windows Setup</div>
+    <div class="bd">
+      <h1>Which type of installation do you want?</h1>
+      <div class="optcard" data-go="s_disk"><div class="oi">UP</div><div><div class="ot">Upgrade: Install Windows and keep files, settings, and applications</div><div class="od">Your files are kept.</div></div></div>
+      <div class="optcard sel" data-go="s_disk"><div class="oi">GEAR</div><div><div class="ot">Custom: Install Windows only (advanced)</div><div class="od">Choose where to install Windows.</div></div></div>
+    </div>
+    <div class="ft"><button class="btn" data-go="s_lic">Back</button></div>
+  </div>
+</div>
+
+<!-- 7: disk -->
+<div class="screen setupWrap" id="s_disk">
+  <div class="setupBox">
+    <div class="hd">Windows Setup</div>
+    <div class="bd">
+      <h1>Where do you want to install Windows?</h1>
+      <table class="disk" id="diskTbl">
+        <tr><th>Name</th><th>Total size</th><th>Free space</th><th>Type</th></tr>
+        <tr class="sel"><td>Drive 0 Unallocated Space</td><td>256.0 GB</td><td>256.0 GB</td><td>Primary</td></tr>
+        <tr><td>Drive 1 Partition 1</td><td>64.0 GB</td><td>12.4 GB</td><td>System</td></tr>
+      </table>
+      <div class="sub">Refresh  |  Delete  |  New  |  Format</div>
+    </div>
+    <div class="ft"><button class="btn" data-go="s_type">Back</button><button class="btn pri" data-go="s_installing">Next</button></div>
+  </div>
+</div>
+
+<!-- 8: installing -->
+<div class="screen setupWrap" id="s_installing">
+  <div class="setupBox">
+    <div class="hd">Windows Setup</div>
+    <div class="bd" style="display:flex;align-items:center;">
+      <div class="steps">
+        <h2>Installing Windows 12</h2>
+        <div class="steprow act" id="st0"><div class="mk">1</div>Copying Windows files</div>
+        <div class="steprow" id="st1"><div class="mk">2</div>Getting files ready for installation <b id="st1p" style="margin-left:4px"></b></div>
+        <div class="steprow" id="st2"><div class="mk">3</div>Installing features</div>
+        <div class="steprow" id="st3"><div class="mk">4</div>Installing updates</div>
+        <div class="steprow" id="st4"><div class="mk">5</div>Finishing up</div>
+        <div class="bar"><i id="instBar"></i></div>
+        <div class="sub" id="instSub">Your PC will restart several times. This might take a while.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 9: restart countdown -->
+<div class="screen center" id="s_restart">
+  <div>
+    <div class="pct" id="rcNum">10</div>
+    <div class="sub" style="font-size:16px">Windows needs to restart to continue</div>
+    <div class="sub">Restarting in a few seconds...</div>
+  </div>
+</div>
+
+<!-- 10: reboot black -->
+<div class="screen center" id="reboot">
+  <div>
+    <div class="winlogo" style="margin:0 auto"><span></span><span></span><span></span><span></span></div>
+    <div class="spinner" style="margin-top:34px"></div>
+  </div>
+</div>
+
+<!-- 11: getting ready prep -->
+<div class="screen center" id="oobePrep">
+  <div>
+    <div class="spinner"></div>
+    <div class="msg" id="prepMsg" style="font-size:22px">Getting ready</div>
+  </div>
+</div>
+
+<!-- 12: OOBE region -->
+<div class="screen oobe setupWrap" id="o_region">
+  <div class="setupBox">
+    <div class="hd">Windows 12</div>
+    <div class="bd center" style="display:flex;flex-direction:column;justify-content:center">
+      <h1>Is this the right country or region?</h1>
+      <div class="fld" style="margin:0 auto;max-width:340px"><select class="sel" id="oRegion"><option>Pakistan</option><option>United States</option><option>United Kingdom</option><option>India</option><option>Canada</option><option>Germany</option></select></div>
+    </div>
+    <div class="ft"><button class="btn pri" data-go="o_kb">Yes</button></div>
+  </div>
+</div>
+
+<!-- 13: keyboard -->
+<div class="screen oobe setupWrap" id="o_kb">
+  <div class="setupBox">
+    <div class="hd">Windows 12</div>
+    <div class="bd center" style="display:flex;flex-direction:column;justify-content:center">
+      <h1>Is this the right keyboard layout?</h1>
+      <div class="fld" style="margin:0 auto;max-width:340px"><select class="sel"><option>US</option><option>UK</option><option>US International</option></select></div>
+    </div>
+    <div class="ft"><button class="btn" data-go="o_region">Skip</button><button class="btn pri" data-go="o_name">Yes</button></div>
+  </div>
+</div>
+
+<!-- 14: account name -->
+<div class="screen oobe setupWrap" id="o_name">
+  <div class="setupBox">
+    <div class="hd">Windows 12</div>
+    <div class="bd center" style="display:flex;flex-direction:column;justify-content:center">
+      <h1>Who's going to use this PC?</h1>
+      <div class="sub" style="margin-bottom:18px">What name do you want to use?</div>
+      <div class="fld" style="margin:0 auto;max-width:340px"><input class="inp" id="oName" placeholder="Name" value="Huzaifa"></div>
+    </div>
+    <div class="ft"><button class="btn pri" data-go="o_pin">Next</button></div>
+  </div>
+</div>
+
+<!-- 15: PIN -->
+<div class="screen oobe setupWrap" id="o_pin">
+  <div class="setupBox">
+    <div class="hd">Windows 12</div>
+    <div class="bd center" style="display:flex;flex-direction:column;justify-content:center">
+      <h1>Create a PIN</h1>
+      <div class="sub" style="margin-bottom:18px">A quick, secure way to sign in. (Try 1234 later on the lock screen.)</div>
+      <div class="pinbox" style="margin:0 auto"><input class="inp" id="oPin" type="password" placeholder="PIN" maxlength="4"><input class="inp" type="password" placeholder="Confirm" maxlength="4"></div>
+    </div>
+    <div class="ft"><button class="btn pri" data-go="o_priv">Next</button></div>
+  </div>
+</div>
+<!-- 16: privacy -->
+<div class="screen oobe setupWrap" id="o_priv">
+  <div class="setupBox">
+    <div class="hd">Windows 12</div>
+    <div class="bd">
+      <h1>Choose privacy settings for your device</h1>
+      <div class="toggrow"><div class="tog on" data-tog></div><div><div class="tt">Location</div><div class="td">Let apps use your location.</div></div></div>
+      <div class="toggrow"><div class="tog on" data-tog></div><div><div class="tt">Find my device</div><div class="td">Keep track of your device if you lose it.</div></div></div>
+      <div class="toggrow"><div class="tog" data-tog></div><div><div class="tt">Diagnostic data</div><div class="td">Send optional diagnostic data to help improve Windows.</div></div></div>
+      <div class="toggrow"><div class="tog on" data-tog></div><div><div class="tt">Tailored experiences</div><div class="td">Let Windows use diagnostic data to personalize tips.</div></div></div>
+      <div class="toggrow"><div class="tog" data-tog></div><div><div class="tt">Advertising ID</div><div class="td">Apps can use your advertising ID.</div></div></div>
+    </div>
+    <div class="ft"><button class="btn pri" data-go="o_finish">Accept</button></div>
+  </div>
+</div>
+
+<!-- 17: hi / finishing -->
+<div class="screen center" id="o_finish" style="background:linear-gradient(135deg,#0067c0,#8b2ec0)">
+  <div style="text-align:center">
+    <div class="spinner"></div>
+    <div class="msg" id="finMsg">Hi</div>
+  </div>
+</div>
+
+<!-- 18: welcome done -->
+<div class="screen center" id="o_done" style="background:linear-gradient(135deg,#0067c0,#00a2ff)">
+  <div class="hero">
+    <div class="winlogo blue" style="margin:0 auto 16px"><span></span><span></span><span></span><span></span></div>
+    <div class="big">Windows 12 is ready</div>
+    <div class="sub" style="font-size:15px;margin-bottom:30px">Installation complete. Welcome, <b id="doneName">Huzaifa</b>!</div>
+    <button class="btn pri" id="enterBtn" style="min-width:200px;height:46px;font-size:16px">Enter Windows 12</button>
+    <div class="sub" style="margin-top:20px;font-size:12px">Opens the Windows 12 desktop (desktop.html).</div>
+  </div>
+</div>
+
+<script>
+var $=function(s){return document.querySelector(s);};
+var cur='boot';
+function go(id){var c=document.getElementById(cur);if(c)c.classList.remove('on');var n=document.getElementById(id);if(n){n.classList.add('on');cur=id;}onEnter(id);}
+document.querySelectorAll('[data-go]').forEach(function(el){el.addEventListener('click',function(){go(el.getAttribute('data-go'));});});
+document.querySelectorAll('[data-pick]').forEach(function(el){el.addEventListener('click',function(){
+  el.parentNode.querySelectorAll('[data-pick]').forEach(function(x){x.classList.remove('sel');});el.classList.add('sel');});});
+document.querySelectorAll('[data-tog]').forEach(function(t){t.addEventListener('click',function(){t.classList.toggle('on');});});
+// disk row select
+document.querySelectorAll('#diskTbl tr').forEach(function(r,i){if(i===0)return;r.addEventListener('click',function(){
+  document.querySelectorAll('#diskTbl tr').forEach(function(x){x.classList.remove('sel');});r.classList.add('sel');});});
+// license agree gate
+var ag=$('#agree');if(ag)ag.addEventListener('change',function(){$('#licNext').disabled=!ag.checked;});
+// install type cards also act as go
+document.querySelectorAll('#s_type .optcard').forEach(function(c){c.addEventListener('click',function(){go('s_disk');});});
+</script>
+<script>
+function onEnter(id){
+  if(id==='s_installing')runInstall();
+  else if(id==='s_restart')runRestart();
+  else if(id==='reboot')setTimeout(function(){go('oobePrep');},3600);
+  else if(id==='oobePrep')runPrep();
+  else if(id==='o_finish')runFinish();
+  else if(id==='o_done'){var n=($('#oName')&&$('#oName').value.trim())||'Huzaifa';$('#doneName').textContent=n;}
+}
+// BIOS boot bootstrap
+(function(){
+  var line=$('#bootLine');var n=0;
+  var t=setInterval(function(){n++;line.textContent='Press any key to boot from CD or DVD'+Array(Math.min(n,7)).join('.');
+    if(n>7){clearInterval(t);line.textContent='Starting Windows Setup...';$('#bootSpin').style.display='block';
+      setTimeout(function(){go('s_lang');},2200);}
+  },320);
+})();
+function runInstall(){
+  var steps=['st0','st1','st2','st3','st4'];var p=0,si=0;var bar=$('#instBar'),sub=$('#instSub');
+  var subs=['Copying Windows files...','Expanding and preparing files...','Installing features and drivers...','Downloading and installing updates...','Almost done — finishing up...'];
+  var iv=setInterval(function(){
+    p+=Math.random()*3+1.4;
+    var seg=Math.min(4,Math.floor(p/20));
+    if(seg!==si){var old=document.getElementById(steps[si]);if(old){old.classList.remove('act');old.classList.add('done');old.querySelector('.mk').textContent='✓';}
+      si=seg;var cu=document.getElementById(steps[si]);if(cu)cu.classList.add('act');if(sub)sub.textContent=subs[si];}
+    if($('#st1p'))$('#st1p').textContent=Math.min(100,Math.round(p))+'%';
+    bar.style.width=Math.min(100,p)+'%';
+    if(p>=100){clearInterval(iv);var last=document.getElementById('st4');if(last){last.classList.remove('act');last.classList.add('done');last.querySelector('.mk').textContent='✓';}
+      setTimeout(function(){go('s_restart');},900);}
+  },140);
+}
+function runRestart(){
+  var n=10;var el=$('#rcNum');el.textContent=n;
+  var iv=setInterval(function(){n--;el.textContent=n;if(n<=0){clearInterval(iv);go('reboot');}},700);
+}
+function runPrep(){
+  var msgs=['Getting ready','Getting devices ready','Getting ready','This may take a few minutes'];var i=0;var el=$('#prepMsg');
+  var iv=setInterval(function(){i++;if(i<msgs.length){el.textContent=msgs[i];}else{clearInterval(iv);go('o_region');}},1300);
+}
+function runFinish(){
+  var nm=($('#oName')&&$('#oName').value.trim())||'Huzaifa';
+  var msgs=['Hi','Hi '+nm,'We\'re getting everything ready for you','This might take a few minutes','Please keep your PC on','Almost there'];var i=0;var el=$('#finMsg');
+  var iv=setInterval(function(){i++;if(i<msgs.length){el.textContent=msgs[i];}else{clearInterval(iv);go('o_done');}},1600);
+}
+$('#enterBtn').addEventListener('click',function(){
+  var b=$('#enterBtn');b.textContent='Opening...';b.disabled=true;
+  setTimeout(function(){ try{ window.location.href='desktop.html'; }catch(e){} },700);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Windows 12</title>
+<link rel="icon" type="image/png" href="icon/thispc.png">
+<link rel="shortcut icon" href="icon/thispc.png">
+<link rel="stylesheet" href="style 328i/w12-01.css">
+<link rel="stylesheet" href="style 328i/w12-02.css">
+<link rel="stylesheet" href="style 328i/w12-03.css">
+<link rel="stylesheet" href="style 328i/w12-04.css">
+<link rel="stylesheet" href="style 328i/w12-05.css">
+<link rel="stylesheet" href="style 328i/w12-06.css">
+<link rel="stylesheet" href="style 328i/w12-07.css">
+<link rel="stylesheet" href="style 328i/w12-08.css">
+<link rel="stylesheet" href="style 328i/w12-09.css">
+<link rel="stylesheet" href="style 328i/w12-10.css">
+</head>
+<body>
+<audio id="startup" src="sound/startup.mp3" preload="auto"></audio>
+
+<!-- BOOT -->
+<div id="boot">
+  <div class="logo"><div></div><div></div><div></div><div></div></div>
+  <div class="brand">Windows<b>12</b></div>
+  <div class="dotspin"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="btxt">Starting Windows…</div>
+</div>
+
+<!-- LOCK -->
+<div id="lock">
+  <div id="lockInfo">
+    <div class="clock" id="lockClock">9:41</div>
+    <div class="date" id="lockDate">Thursday, October 1</div>
+    <div class="hint" id="lockHint">Click anywhere or press a key to sign in</div>
+  </div>
+  <div id="login">
+    <div class="ava"><img src="icon/user.png" onerror="this.style.display='none'"></div>
+    <div class="name">Huzaifa</div>
+    <div class="pin">
+      <input id="pinInput" type="password" placeholder="PIN" autocomplete="off">
+      <button id="pinGo" title="Sign in">→</button>
+    </div>
+    <div class="sub">Sign-in options</div>
+  </div>
+  <div id="lockTray">
+    <span title="Network"><img src="icon/network.png" style="width:20px;height:20px;opacity:.85"></span>
+    <span title="Bluetooth"><img src="icon/blueteeth.png" style="width:20px;height:20px;opacity:.85"></span>
+    <span title="Power">⏻</span>
+  </div>
+</div>
+
+<!-- DESKTOP -->
+<div id="desktop">
+  <video id="liveWall" loop muted autoplay playsinline></video>
+  <div id="iconLayer"></div>
+
+  <!-- DESKTOP WIDGETS -->
+  <div id="widgets">
+    <div class="widget wClock" id="wClock">
+      <div class="wTime" id="wgTime">9:41</div>
+      <div class="wDate" id="wgDate">Thursday, October 1</div>
+    </div>
+    <div class="widget wWeather" id="wWeather" title="Open Weather">
+      <div class="wTop">
+        <div class="wIco" id="wgIco">☀️</div>
+        <div class="wTemp" id="wgTemp">24°</div>
+      </div>
+      <div class="wCond" id="wgCond">Sunny</div>
+      <div class="wLoc" id="wgLoc">San Francisco</div>
+    </div>
+  </div>
+
+  <div id="startMenu">
+    <div class="search">🔍 <input id="smSearch" placeholder="Search for apps, settings, and documents"></div>
+    <div class="lbl">Pinned</div>
+    <div class="pinGrid" id="pinGrid"></div>
+    <div class="foot">
+      <div class="u"><img src="icon/user.png" onerror="this.style.visibility='hidden'"> Huzaifa</div>
+      <div class="pw" id="powerBtn" title="Power">⏻</div>
+    </div>
+  </div>
+
+  <div id="taskbar">
+    <div id="tbSearch">🔍 Search</div>
+    <div class="tbtn" id="startBtn" title="Start"><img src="icon/home.png" onerror="this.src='icon/apps.png'"></div>
+    <div class="tbtn" data-app="explorer" title="File Explorer"><img src="icon/explorer.png"></div>
+    <div class="tbtn" data-app="terminal" title="Terminal"><img src="icon/terminal.svg"></div>
+    <div class="tbtn" data-app="settings" title="Settings"><img src="icon/system.png"></div>
+    <div class="tbtn" data-app="games" title="Games"><img src="icon/game.png"></div>
+  </div>
+
+  <div id="systray">
+    <div class="ic">
+      <img src="icon/network.png" title="Network">
+      <img src="icon/blueteeth.png" title="Bluetooth">
+      <img src="icon/safe.png" title="Security">
+    </div>
+    <div id="trayClock"><div id="tcTime">9:41 AM</div><div id="tcDate">10/1/2026</div></div>
+  </div>
+
+  <div id="trayFly">
+    <div class="bigt" id="flyTime">9:41</div>
+    <div class="bigd" id="flyDate">Thursday, October 1, 2026</div>
+    <div class="cal" id="flyCal"></div>
+    <div class="qa">
+      <div class="q on" data-t="wifi"><img src="icon/network.png"><br>Wi-Fi</div>
+      <div class="q on" data-t="bt"><img src="icon/blueteeth.png"><br>Bluetooth</div>
+      <div class="q" data-t="safe"><img src="icon/safe.png"><br>Focus</div>
+    </div>
+  </div>
+</div>
+
+<div id="ctx"></div>
+
+<!-- system32: core (split from kernel) -->
+<script src="system32/sys01.js"></script>
+<script src="system32/sys02.js"></script>
+<script src="system32/sys03.js"></script>
+<script src="system32/sys04.js"></script>
+<script src="system32/sys05.js"></script>
+<script src="system32/sys06.js"></script>
+<script src="system32/sys07.js"></script>
+<script src="system32/sys08.js"></script>
+<script src="system32/sys09.js"></script>
+<script src="system32/sys10.js"></script>
+<script src="system32/sys11.js"></script>
+<script src="system32/sys12.js"></script>
+<script src="system32/sys13.js"></script>
+<script src="system32/sys14.js"></script>
+<script src="system32/sys15.js"></script>
+<script src="system32/sys16.js"></script>
+<script src="system32/sys17.js"></script>
+<script src="system32/sys18.js"></script>
+<script src="system32/sys19.js"></script>
+<script src="system32/sys20.js"></script>
+<script src="system32/sys21.js"></script>
+<script src="system32/sys22.js"></script>
+<script src="system32/sys23.js"></script>
+<script src="system32/sys24.js"></script>
+<script src="system32/sys25.js"></script>
+<script src="system32/sys26.js"></script>
+<script src="system32/sys27.js"></script>
+<script src="system32/sys28.js"></script>
+<script src="system32/sys29.js"></script>
+<script src="system32/sys30.js"></script>
+<script src="system32/sys31.js"></script>
+<script src="system32/sys32.js"></script>
+<script src="system32/sys33.js"></script>
+<script src="system32/sys34.js"></script>
+<script src="system32/sys35.js"></script>
+<script src="system32/sys36.js"></script>
+<script src="system32/sys37.js"></script>
+<script src="system32/sys38.js"></script>
+<script src="system32/sys39.js"></script>
+<script src="system32/sys40.js"></script>
+<script src="system32/sys41.js"></script>
+<script src="system32/sys42.js"></script>
+<script src="system32/sys43.js"></script>
+<script src="system32/sys44.js"></script>
+<script src="system32/sys45.js"></script>
+<script src="system32/sys46.js"></script>
+<script src="system32/sys47.js"></script>
+<script src="system32/sys48.js"></script>
+<script src="system32/sys49.js"></script>
+<script src="system32/sys50.js"></script>
+<script src="system32/sys51.js"></script>
+<script src="system32/sys52.js"></script>
+<script src="system32/sys53.js"></script>
+<script src="system32/sys54.js"></script>
+<script src="system32/sys55.js"></script>
+<script src="system32/sys56.js"></script>
+<script src="system32/sys57.js"></script>
+<script src="system32/sys58.js"></script>
+<script src="system32/sys59.js"></script>
+<script src="system32/sys60.js"></script>
+<script src="system32/sys61.js"></script>
+<script src="system32/sys62.js"></script>
+<script src="system32/sys63.js"></script>
+<script src="system32/sys64.js"></script>
+<script src="system32/sys65.js"></script>
+<script src="system32/sys66.js"></script>
+<script src="system32/sys67.js"></script>
+<script src="system32/sys68.js"></script>
+<script src="system32/sys69.js"></script>
+<script src="system32/sys70.js"></script>
+<script src="system32/sys71.js"></script>
+<script src="system32/sys72.js"></script>
+<script src="system32/sys73.js"></script>
+<script src="system32/sys74.js"></script>
+<script src="system32/sys75.js"></script>
+<script src="system32/sys76.js"></script>
+<script src="system32/sys77.js"></script>
+<script src="system32/sys78.js"></script>
+<script src="system32/sys79.js"></script>
+<script src="system32/sys80.js"></script>
+<!-- err/34: toasts, help, welcome, diagnostics -->
+<script src="err/34/e34-01.js"></script>
+<script src="err/34/e34-02.js"></script>
+<script src="err/34/e34-03.js"></script>
+<script src="err/34/e34-04.js"></script>
+<!-- err/69: alt-tab, show-desktop, about, autosave -->
+<script src="err/69/e69-01.js"></script>
+<script src="err/69/e69-02.js"></script>
+<script src="err/69/e69-03.js"></script>
+<script src="err/69/e69-04.js"></script>
+</body>
+</html>
